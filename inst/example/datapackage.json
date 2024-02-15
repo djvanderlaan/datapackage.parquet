@@ -1,0 +1,88 @@
+{
+  "name": "iris",
+  "resources": [
+    {
+      "name": "iris",
+      "format": "parquet",
+      "mediatype": "text/csv",
+      "path": "iris.parquet",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "Sepal.Length",
+            "type": "number"
+          },
+          {
+            "name": "Sepal.Width",
+            "type": "number"
+          },
+          {
+            "name": "Petal.Length",
+            "type": "number"
+          },
+          {
+            "name": "Petal.Width",
+            "type": "number"
+          },
+          {
+            "name": "Species",
+            "type": "integer",
+            "codelist": "Species-codelist"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Species-codelist",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "path": "Species-codelist.csv",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "code",
+            "type": "integer"
+          },
+          {
+            "name": "label",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "iris2",
+      "format": "parquet",
+      "mediatype": "text/csv",
+      "path": "iris2.parquet",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "Sepal.Length",
+            "type": "number"
+          },
+          {
+            "name": "Sepal.Width",
+            "type": "number"
+          },
+          {
+            "name": "Petal.Length",
+            "type": "number"
+          },
+          {
+            "name": "Petal.Width",
+            "type": "number"
+          },
+          {
+            "name": "Species",
+            "type": "integer",
+            "codelist": "Species-codelist"
+          }
+        ]
+      }
+    }
+  ]
+}
