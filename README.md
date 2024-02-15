@@ -3,7 +3,8 @@
 %\VignetteIndexEntry{Reading parquet files from Data Packages}
 -->
 
-`datapackage.parquet` is an extension for the `datapackage` R package
+`datapackage.parquet` is an extension for the 
+[`datapackage` R package](https://github.com/djvanderlaan/datapackage)
 that adds functionality for reading data from parquet files. It also
 serves as an example how one can implement additional readers for the
 `datapackage` package.
