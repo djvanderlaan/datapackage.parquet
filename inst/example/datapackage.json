@@ -4,7 +4,6 @@
     {
       "name": "iris",
       "format": "parquet",
-      "mediatype": "text/csv",
       "path": "iris.parquet",
       "encoding": "utf-8",
       "schema": {
@@ -28,26 +27,11 @@
           {
             "name": "Species",
             "type": "integer",
-            "codelist": "Species-codelist"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Species-codelist",
-      "format": "csv",
-      "mediatype": "text/csv",
-      "path": "Species-codelist.csv",
-      "encoding": "utf-8",
-      "schema": {
-        "fields": [
-          {
-            "name": "code",
-            "type": "integer"
-          },
-          {
-            "name": "label",
-            "type": "string"
+            "categories": [
+              {"value": 1, "label": "setosa"},
+              {"value": 2, "label": "versicolor"},
+              {"value": 3, "label": "virginica"}
+            ]
           }
         ]
       }
@@ -55,7 +39,6 @@
     {
       "name": "iris2",
       "format": "parquet",
-      "mediatype": "text/csv",
       "path": "iris2.parquet",
       "encoding": "utf-8",
       "schema": {
@@ -79,7 +62,29 @@
           {
             "name": "Species",
             "type": "integer",
-            "codelist": "Species-codelist"
+            "codelist": {
+              "resource": "species-categories",
+              "valueField": "code"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "species-categories",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "path": "species-categories.csv",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "code",
+            "type": "integer"
+          },
+          {
+            "name": "label",
+            "type": "string"
           }
         ]
       }
