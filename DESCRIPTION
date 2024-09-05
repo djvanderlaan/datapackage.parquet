@@ -15,8 +15,7 @@ Depends:
     datapackage,
     R (>= 3.6.0)
 Imports:
-    arrow,
-    methods
+    arrow
 Suggests:
     simplermarkdown,
     dplyr
