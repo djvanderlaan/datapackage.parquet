@@ -4,13 +4,15 @@
 -->
 
 `datapackage.parquet` is an extension for the `datapackage` R package
-that adds functionality for reading data from parquet files. It also
-serves as an example how one can implement additional readers for the
-`datapackage` package.
+that adds functionality for reading data from parquet files and writing
+data to parquet files. It also serves as an example how one can
+implement additional readers for the `datapackage` package.
 
-First an example on how to use the package:
+## Reading data
 
-``` R
+First an example on how to use the package to read from a Data Package:
+
+``` r
 > library(datapackage)
 > library(datapackage.parquet)
 ```
@@ -19,13 +21,13 @@ When loading the `datapackage.parquet` package it registers a reader for
 Data Resources with a format `parquet` or extension `parquet`. One of
 the example resources in the package uses this format:
 
-``` R
+``` r
 > dp <- opendatapackage(system.file("example", package = "datapackage.parquet"))
 ```
 
 To get the data one can simply do:
 
-``` R
+``` r
 > iris <- dpgetdata(dp, "iris")
 > iris |> head()
   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
@@ -39,7 +41,7 @@ To get the data one can simply do:
 
 Or, to get the variables with a code list as a factor
 
-``` R
+``` r
 > iris <- dpgetdata(dp, "iris", to_factor = TRUE)
 > iris |> head()
   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
@@ -56,7 +58,7 @@ This returns an an Arrow Tabular object. For this type of object
 operations from the `dplyr` package are defined. For more information
 see the [Apache Arrow site](https://arrow.apache.org/). An example:
 
-``` R
+``` r
 > library(dplyr)
 
 Attaching package: ‘dplyr’
@@ -91,4 +93,89 @@ The following objects are masked from ‘package:base’:
  9          6.6         2.9          4.6         1.3       2  2.28
 10          5.2         2.7          3.9         1.4       2  1.93
 # ℹ 40 more rows
+```
+
+## Writing data
+
+When loading the package is also registers a writer for parquet files.
+Therefore, when writing data for a Data Resource and the resource has
+‘parquet’ as its format, it will use `write_parquet` to write the file.
+
+As an example let’s create a Data Package with the `chickwts` dataset:
+
+``` r
+> dir <- tempfile()
+> dp <- newdatapackage(dir, "chickwts")
+```
+
+We create the resource as regular, but specify `format = "parquet"`:
+
+``` r
+> data(chickwts)
+> res <- dpgeneratedataresource(chickwts, name = "chickwts", 
++   format = "parquet")
+> dptitle(res) <- "Chicken Weights by Feed Type"
+> res
+[chickwts] Chicken Weights by Feed Type
+
+Selected properties:
+path     :"chickwts.parquet"
+format   :"parquet"
+mediatype:"application/x-parquet"
+encoding :"utf-8"
+schema   :Table Schema [2] "weight" "feed"
+```
+
+As we can see by specifying the format both the format and the mediatype
+are set to the correct values for parquet files.
+
+Let’s add the resource to the Data Package
+
+``` r
+> dpresources(dp) <- res
+> dp
+[chickwts] 
+
+Location: </tmp/Rtmpu5UvOr/file8e621a565211>
+Resources:
+[chickwts] Chicken Weights by Feed Type
+```
+
+We can now write the data set:
+
+``` r
+> dpwritedata(dpresource(dp, "chickwts"), chickwts)
+```
+
+This results in a parquet file:
+
+``` r
+> list.files(dir)
+[1] "chickwts.parquet" "datapackage.json"
+```
+
+Whick we can read back in using `dpgetdata`:
+
+``` r
+> dpresource(dp, "chickwts") |> dpgetdata() |> head()
+  weight feed
+1    179    2
+2    160    2
+3    136    2
+4    227    2
+5    217    2
+6    168    2
+```
+
+And if we want the categorical variables as factor:
+
+``` r
+> dpresource(dp, "chickwts") |> dpgetdata(to_factor = TRUE) |> head()
+  weight      feed
+1    179 horsebean
+2    160 horsebean
+3    136 horsebean
+4    227 horsebean
+5    217 horsebean
+6    168 horsebean
 ```
