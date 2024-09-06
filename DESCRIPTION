@@ -10,7 +10,7 @@ Authors@R:
            comment = c(ORCID = "0000-0002-0693-1514"))
 Description: Add a reader for parquet files to the datapackage package. Loading
     the package allows one to automatically read parquet files in Data
-    Resources. It is also possible to request an Arror connection to the data. 
+    Resources. It is also possible to request an Arrow connection to the data. 
 Depends:
     datapackage,
     R (>= 3.6.0)
