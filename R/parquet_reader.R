@@ -16,7 +16,7 @@
 #'
 #' When the \code{datapackage.parquet} package is loaded the reader for parquet
 #' files is registered with the \code{datapackage} package. Therefore, when
-#' using \code{dpgetdata} to ge the data for a data resource for which the data
+#' using \code{dpgetdata} to get the data for a data resource for which the data
 #' is stored in a parquet file the correct reader is automatically used.
 #'
 #' @return
