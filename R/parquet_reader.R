@@ -28,12 +28,18 @@
 parquet_reader <- function(path, resource, to_factor = FALSE, as_connection = FALSE, ...) {
   schema <- datapackage::dpschema(resource)
   if (is.null(schema)) {
-    dta <- arrow::read_parquet(path, as_data_frame = !as_connection, ...)
+    dta <- arrow::open_dataset(path, ...)
+    if (!as_connection) {
+      dta <- as.data.frame(dta)
+      class(dta) <- "data.frame"
+    }
   } else {
-    dta <- arrow::read_parquet(path, as_data_frame = !as_connection, ...)
+    dta <- arrow::open_dataset(path, ...)
+    if (!as_connection) dta <- as.data.frame(dta)
     if (as_connection) {
-      # Check if parquet file is valid
-      tmp <- dta$Take(1) |> as.data.frame()
+      # Check if parquet file is valid; we only read the first few records this 
+      # should catch most errors list wrong types and fields
+      tmp <- utils::head(dta) |> as.data.frame()
       # Then we check these records; note that this will not catch all errors as, for
       # example fields not read in can be invalid; this is mainly the case when 
       # checking contraints, therefore we will not check these as this would give a 

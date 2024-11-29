@@ -4,7 +4,7 @@
     {
       "name": "iris",
       "format": "parquet",
-      "path": "iris.parquet",
+      "path": ["iris/1.parquet", "iris/2.parquet", "iris/3.parquet"],
       "encoding": "utf-8",
       "schema": {
         "fields": [
