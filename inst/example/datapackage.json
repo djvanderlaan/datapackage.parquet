@@ -63,8 +63,7 @@
             "name": "Species",
             "type": "integer",
             "codelist": {
-              "resource": "species-categories",
-              "valueField": "code"
+              "resource": "species-categories"
             }
           }
         ]
@@ -76,6 +75,9 @@
       "mediatype": "text/csv",
       "path": "species-categories.csv",
       "encoding": "utf-8",
+      "categoriesFieldMap": {
+        "valie": "code"
+      },
       "schema": {
         "fields": [
           {

@@ -22,13 +22,14 @@ Data Resources with a format `parquet` or extension `parquet`. One of
 the example resources in the package uses this format:
 
 ``` r
-> dp <- opendatapackage(system.file("example", package = "datapackage.parquet"))
+> dp <- open_datapackage(system.file("example", 
++         package = "datapackage.parquet"))
 ```
 
 To get the data one can simply do:
 
 ``` r
-> iris <- dpgetdata(dp, "iris")
+> iris <- dp_get_data(dp, "iris")
 > iris |> head()
   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 1          5.1         3.5          1.4         0.2       1
@@ -42,7 +43,7 @@ To get the data one can simply do:
 Or, to get the variables with a code list as a factor
 
 ``` r
-> iris <- dpgetdata(dp, "iris", to_factor = TRUE)
+> iris <- dp_get_data(dp, "iris", convert_categories = "to_factor")
 > iris |> head()
   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 1          5.1         3.5          1.4         0.2  setosa
@@ -74,14 +75,14 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
  
-> iris <- dpgetconnection(dp, "iris")
+> iris <- dp_get_connection(dp, "iris")
 > iris |> 
 +   filter(Species == 2, Sepal.Length > 4) |> 
 +   mutate(ratio = Sepal.Length/Sepal.Width) |>
 +   collect()
 # A tibble: 50 × 6
    Sepal.Length Sepal.Width Petal.Length Petal.Width Species ratio
-          <dbl>       <dbl>        <dbl>       <dbl>   <int> <dbl>
+ *        <dbl>       <dbl>        <dbl>       <dbl>   <int> <dbl>
  1          7           3.2          4.7         1.4       2  2.19
  2          6.4         3.2          4.5         1.5       2  2   
  3          6.9         3.1          4.9         1.5       2  2.23
@@ -105,16 +106,16 @@ As an example let’s create a Data Package with the `chickwts` dataset:
 
 ``` r
 > dir <- tempfile()
-> dp <- newdatapackage(dir, "chickwts")
+> dp <- new_datapackage(dir, "chickwts")
 ```
 
 We create the resource as regular, but specify `format = "parquet"`:
 
 ``` r
 > data(chickwts)
-> res <- dpgeneratedataresource(chickwts, name = "chickwts", 
+> res <- dp_generate_dataresource(chickwts, name = "chickwts", 
 +   format = "parquet")
-> dptitle(res) <- "Chicken Weights by Feed Type"
+> dp_title(res) <- "Chicken Weights by Feed Type"
 > res
 [chickwts] Chicken Weights by Feed Type
 
@@ -132,11 +133,11 @@ are set to the correct values for parquet files.
 Let’s add the resource to the Data Package
 
 ``` r
-> dpresources(dp) <- res
+> dp_resources(dp) <- res
 > dp
 [chickwts] 
 
-Location: </tmp/Rtmpu5UvOr/file8e621a565211>
+Location: </tmp/RtmpxyT4g0/file1a54d31e60ef3>
 Resources:
 [chickwts] Chicken Weights by Feed Type
 ```
@@ -144,7 +145,7 @@ Resources:
 We can now write the data set:
 
 ``` r
-> dpwritedata(dpresource(dp, "chickwts"), chickwts)
+> dp_write_data(dp_resource(dp, "chickwts"), chickwts)
 ```
 
 This results in a parquet file:
@@ -154,10 +155,10 @@ This results in a parquet file:
 [1] "chickwts.parquet" "datapackage.json"
 ```
 
-Whick we can read back in using `dpgetdata`:
+Whick we can read back in using `dp_get_data`:
 
 ``` r
-> dpresource(dp, "chickwts") |> dpgetdata() |> head()
+> dp_resource(dp, "chickwts") |> dp_get_data() |> head()
   weight feed
 1    179    2
 2    160    2
@@ -170,7 +171,7 @@ Whick we can read back in using `dpgetdata`:
 And if we want the categorical variables as factor:
 
 ``` r
-> dpresource(dp, "chickwts") |> dpgetdata(to_factor = TRUE) |> head()
+> dp_resource(dp, "chickwts") |> dp_get_data(convert_categories = "to_factor") |> head()
   weight      feed
 1    179 horsebean
 2    160 horsebean

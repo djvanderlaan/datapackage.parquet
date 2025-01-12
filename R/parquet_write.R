@@ -1,4 +1,3 @@
-
 #' Write the data of a Data Resource to a parquet file
 #'
 #' @param x \code{data.frame} with the data to write.
@@ -10,12 +9,12 @@
 #' @param ... passed on to \code{arrow::write_parquet}. 
 #'
 #' @details
-#' Generally used by calling \code{\link{dpwritedata}} from the
+#' Generally used by calling \code{\link{dp_write_data}} from the
 #' \code{datapackage} package.
 #'
 #' When the \code{datapackage.parquet} package is loaded the writer for parquet
 #' files is registered with the \code{datapackage} package. Therefore, when
-#' using \code{dpwritedata} to write the data for a data resource for which the
+#' using \code{dp_write_data} to write the data for a data resource for which the
 #' data is stored in a parquet file the correct writeer is automatically used.
 #'
 #' @return
@@ -24,13 +23,13 @@
 #'
 #' @export 
 parquet_write <- function(x, resourcename, datapackage, ...) {
-  dataresource <- datapackage::dpresource(datapackage, resourcename)
+  dataresource <- datapackage::dp_resource(datapackage, resourcename)
   if (is.null(dataresource)) 
     stop("Data resource '", resourcename, "' does not exist in data package")
   # First check to see of dataresourc fits data
-  datapackage::dpcheckdataresource(x, dataresource = dataresource, throw = TRUE)
+  datapackage::dp_check_dataresource(x, dataresource = dataresource, throw = TRUE)
   # Get location
-  path <- datapackage::dppath(dataresource, fullpath = TRUE)
+  path <- datapackage::dp_path(dataresource, fullpath = TRUE)
   if (is.null(path)) stop("Path is missing in dataresource.")
   # Write
   arrow::write_parquet(x, sink = path, ...)
