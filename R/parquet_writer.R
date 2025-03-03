@@ -2,7 +2,7 @@
 #'
 #' @param x \code{data.frame} with the data to write.
 #' 
-#' @param resourcename name of the Data Resource in the Data Package.
+#' @param resource_name name of the Data Resource in the Data Package.
 #'
 #' @param datapackage the Data Package to which the file should be written.
 #'
@@ -22,14 +22,14 @@
 #' creating CSV-files in the directory of the data package.
 #'
 #' @export 
-parquet_write <- function(x, resourcename, datapackage, ...) {
-  dataresource <- datapackage::dp_resource(datapackage, resourcename)
+parquet_writer <- function(x, resource_name, datapackage, ...) {
+  dataresource <- datapackage::dp_resource(datapackage, resource_name)
   if (is.null(dataresource)) 
-    stop("Data resource '", resourcename, "' does not exist in data package")
+    stop("Data resource '", resource_name, "' does not exist in data package")
   # First check to see of dataresourc fits data
   datapackage::dp_check_dataresource(x, dataresource = dataresource, throw = TRUE)
   # Get location
-  path <- datapackage::dp_path(dataresource, fullpath = TRUE)
+  path <- datapackage::dp_path(dataresource, full_path = TRUE)
   if (is.null(path)) stop("Path is missing in dataresource.")
   # Write
   arrow::write_parquet(x, sink = path, ...)
