@@ -137,7 +137,7 @@ Let’s add the resource to the Data Package
 > dp
 [chickwts] 
 
-Location: </tmp/RtmpxyT4g0/file1a54d31e60ef3>
+Location: </tmp/RtmpbKC30q/file2247e432b33ab6>
 Resources:
 [chickwts] Chicken Weights by Feed Type
 ```
