@@ -1,0 +1,7 @@
+CHANGES IN VERSION 0.1.1
+
+BUG FIXES
+
+  - `parquet_writer()` gave error when data is stored in a subdirectory of the
+    data package and this directory does not yet exist. These directories are
+    now automatically created. 

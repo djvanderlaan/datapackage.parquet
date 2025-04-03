@@ -31,6 +31,8 @@ parquet_writer <- function(x, resource_name, datapackage, ...) {
   # Get location
   path <- datapackage::dp_path(dataresource, full_path = TRUE)
   if (is.null(path)) stop("Path is missing in dataresource.")
+  # If create directories in datapackage
+  dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
   # Write
   arrow::write_parquet(x, sink = path, ...)
 }

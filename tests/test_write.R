@@ -15,6 +15,7 @@ dta <- data.frame(
   )
 
 res <- dp_generate_dataresource(dta, "name", format = "parquet")
+dp_path(res) <- "data/name.parquet"
 
 dp <- new_datapackage(dir)
 
@@ -54,6 +55,8 @@ expect_equal(tmp, dta2, attributes = FALSE)
 expect_equal(levels(tmp$factor), c("A", "B", "C"))
 
 # Cleanup
+ignore <- file.remove(list.files(file.path(dir, "data"), full.names = TRUE))
+ignore <- file.remove(file.path(dir, "data"))
 ignore <- file.remove(list.files(dir, full.names = TRUE))
 ignore <- file.remove(dir)
 

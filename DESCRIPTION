@@ -1,7 +1,7 @@
 Package: datapackage.parquet
 Type: Package
 Title: Data Reader for Parquet Files for the Datapackage Package
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     person(given = "Jan",
            family = "van der Laan",
