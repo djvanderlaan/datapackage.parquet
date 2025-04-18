@@ -6,16 +6,17 @@
 #'
 #' @param datapackage the Data Package to which the file should be written.
 #'
-#' @param ... passed on to \code{arrow::write_parquet}. 
+#' @param ... passed on to \code{\link[arrow]{write_parquet}}. 
 #'
 #' @details
-#' Generally used by calling \code{\link{dp_write_data}} from the
-#' \code{datapackage} package.
+#' Generally used by calling \code{\link[datapackage]{dp_write_data}} from the
+#' 'datapackage' package.
 #'
-#' When the \code{datapackage.parquet} package is loaded the writer for parquet
-#' files is registered with the \code{datapackage} package. Therefore, when
-#' using \code{dp_write_data} to write the data for a data resource for which the
-#' data is stored in a parquet file the correct writeer is automatically used.
+#' When the 'datapackage.parquet' package is loaded the writer for parquet
+#' files is registered with the 'datapackage' package. Therefore, when using
+#' \code{\link[datapackage]{dp_write_data}} to write the data for a data
+#' resource for which the data is stored in a parquet file the correct writeer
+#' is automatically used.
 #'
 #' @return
 #' The function doesn't return anything. It is called for it's side effect of

@@ -14,13 +14,14 @@
 #' @param ... additional arguments are passed on to \code{\link[arrow]{read_parquet}}.
 #'
 #' @seealso
-#' Generally used by calling \code{\link{dp_get_data}} from the
-#' \code{datapackage} package.
+#' Generally used by calling \code{\link[datapackage]{dp_get_data}} from the
+#' 'datapackage' package.
 #'
-#' When the \code{datapackage.parquet} package is loaded the reader for parquet
-#' files is registered with the \code{datapackage} package. Therefore, when
-#' using \code{dp_get_data} to get the data for a data resource for which the data
-#' is stored in a parquet file the correct reader is automatically used.
+#' When the 'datapackage.parquet' package is loaded the reader for parquet
+#' files is registered with the 'datapackage' package. Therefore, when
+#' using \code{\link[datapackage]{dp_get_data}} to get the data for a data
+#' resource for which the data is stored in a parquet file the correct reader
+#' is automatically used.
 #'
 #' @return
 #' Returns a \code{data.frame} with the data or when \code{as_connection = TRUE}
